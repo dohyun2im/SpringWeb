@@ -1,4 +1,4 @@
-package com.EzenWeb.controller;
+package com.EzenWeb.controller.test;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
