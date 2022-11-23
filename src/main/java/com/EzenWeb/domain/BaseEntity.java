@@ -1,4 +1,4 @@
-package com.EzenWeb.domain.entity;
+package com.EzenWeb.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class BaseEntity {
     @CreatedDate
     @Column( updatable = false)
-    private LocalDateTime createAt;
+    private LocalDateTime cdate;
     @LastModifiedDate
-    private LocalDateTime updateAt;
+    private LocalDateTime udate;
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>방문록</h1>
+  카테고리작성<input class= 'categoryname' type="text"> <button type="button" onclick="setcategory()">추가</button><br>
+  글 작성: <input type="text" class="visit"><select onchange="getvisit()" class="categorylist"></select><br>
+  <button onclick="setvisit()">전송</button><br>
+
+  <h1>방문록리스트</h1>
+  <table class="visitlist">
+  </table>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/js/visit.js"></script>
+</body>
+</html>

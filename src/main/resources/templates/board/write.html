@@ -6,10 +6,13 @@
 </head>
 <body>
   <h1>write</h1>
-  <form>
-    제목 : <input type="text" class="btitle">     <br>
-    내용 : <input type="text" class="bcontent" >  <br>
-    파일 : <input type="file" class="bfile">      <br>
+  카테고리작성<input class= 'categoryname' type="text"> <button type="button" onclick="setcategory()">추가</button>
+
+  <form class="boardform">
+    <select class="categorylist"></select>
+    제목 : <input type="text" class="btitle" name="btitle">     <br>
+    내용 : <input type="text" class="bcontent" name="bcontent">  <br>
+    파일 : <input type="file" class="bfile" name="bfile">      <br>
     <button type="button" onclick="setboard()">전송</button>
   </form>
 

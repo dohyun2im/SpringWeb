@@ -1,9 +1,12 @@
 package com.EzenWeb.domain.entity;
 
+import com.EzenWeb.domain.BaseEntity;
 import com.EzenWeb.domain.Dto.memberDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -13,7 +16,7 @@ import javax.persistence.*;
 @ToString
 @Builder
 @Table(name = "member")
-public class MemberEntity {
+public class MemberEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mno;
@@ -23,6 +26,11 @@ public class MemberEntity {
     private String mpassword;
     @Column(nullable = false)
     private String mphone;
+
+    @OneToMany(mappedBy = "memberEntity")
+    @Builder.Default
+    private List<BoardEntity> boardlist = new ArrayList<>();
+
     public memberDto toDto() {
         return memberDto.builder()
                         .mno(this.mno)
