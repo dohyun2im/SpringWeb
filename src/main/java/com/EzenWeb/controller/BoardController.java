@@ -67,7 +67,7 @@ public class BoardController {
     }
     //게시물수정
     @PutMapping("/updateboard")
-    public boolean updateboard(@RequestBody BoardDto dto){
+    public boolean updateboard(BoardDto dto){
         return boardService.updateboard(dto);
     }
     //게시물삭제

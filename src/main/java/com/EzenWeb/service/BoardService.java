@@ -56,7 +56,21 @@ public class BoardService {
         catch (Exception e){
             System.out.println(e);
         }
+    }
+    @Transactional
+    public boolean fileupload(BoardDto dto , BoardEntity entity){
+        if(dto.getBfile() != null) {
+            String filename = UUID.randomUUID().toString() + "_" + dto.getBfile().getOriginalFilename();
 
+            entity.setBfile(filename);
+            try {
+                dto.getBfile().transferTo(new File(path + filename));
+                return true;
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return false;
     }
     @Transactional
     public boolean setcategory(BcategoryDto dto){
@@ -100,15 +114,7 @@ public class BoardService {
             entity.setMemberEntity(memberEntity);
             entity.setBcategoryEntity(bcategoryEntity);
 
-            String filename = UUID.randomUUID().toString()+"_"+dto.getBfile().getOriginalFilename();
-
-            entity.setBfile(filename);
-            try {
-                dto.getBfile().transferTo(new File(path + filename));
-            }
-            catch (Exception e){
-                System.out.println(e);
-            }
+            fileupload(dto, entity);
 
             memberEntity.getBoardlist().add(entity);
             bcategoryEntity.getBoardEntityList().add(entity);
@@ -151,6 +157,17 @@ public class BoardService {
         Optional<BoardEntity> optional = boardRepository.findById(dto.getBno());
         if(optional.isPresent()) {
             BoardEntity entity = optional.get();
+            if(dto.getBfile() != null) {
+                if (entity.getBfile() != null) {
+                    File file = new File(path + entity.getBfile());
+                    if (file.exists()) {
+                        file.delete();
+                    }
+                    entity.setBtitle(null);
+                }
+                fileupload(dto, entity);
+            }
+
             entity.setBtitle(dto.getBtitle());
             entity.setBcontent(dto.getBcontent());
             boardRepository.save(entity);
@@ -163,6 +180,12 @@ public class BoardService {
         Optional<BoardEntity> optional = boardRepository.findById(bno);
         if(optional.isPresent()) {
             BoardEntity entity = optional.get();
+            if (entity.getBfile() != null) {
+                File file = new File(path + entity.getBfile());
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
             boardRepository.delete(entity);
             return true;
         }

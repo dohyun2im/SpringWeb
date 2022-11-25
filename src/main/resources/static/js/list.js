@@ -20,7 +20,7 @@ function getboards(){
         data:{"cno":cno},
         success:function (re) {
           re.forEach(e=>{
-            html += '<tr onclick="getview('+e.bno+')"><td>'+e.category+'</td><td>'+e.btitle+'</td><td>'+e.bcontent+'</td><td>'+e.filename+'</td><td>'+e.memail+'</td></tr>'
+            html += '<tr onclick="getview('+e.bno+')"><td>'+e.category+'</td><td>'+e.btitle+'</td><td>'+e.bcontent+'</td><td>'+e.filename.split("_")[1]+'</td><td>'+e.memail+'</td></tr>'
           })
           document.querySelector('.list').innerHTML = html;
         }

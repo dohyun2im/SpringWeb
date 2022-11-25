@@ -5,7 +5,10 @@ $.ajax({
     type:"get",
     data:{"bno":bno},
     success:function(re){
-        let html='<tr><th>제목: '+re.btitle+'</th><th>내용: '+re.bcontent+'</th><th>파일: '+re.filename+'</th><th>조회수: '+re.bview+'</th></tr>'
+        let html='<div>제목: '+re.btitle+'</div>'+
+                 '<div>내용: '+re.bcontent+'</div>'+
+                 '<div><a href="/board/filedownload/?filename='+re.filename+'">파일: '+re.filename.split("_")[1]+'</a></div>'+
+                 '<div>조회수: '+re.bview+'</div>'
         document.querySelector('.view').innerHTML =html
     }
 })

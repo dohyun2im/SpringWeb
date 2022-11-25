@@ -2,17 +2,15 @@
 let bno = sessionStorage.getItem("bno");
 
 function updateboard(){
-    let board = {
-            bno: bno,
-            btitle: document.querySelector('.btitle').value ,
-            bcontent: document.querySelector('.bcontent').value,
-            bfile: document.querySelector('.bfile').value
-        }
+    let boardform = document.querySelector('.boardform');
+    let data = new FormData(boardform);
+    data.set('bno', bno);
     $.ajax({
         url:"/board/updateboard",
         type:"put",
-        data:JSON.stringify(board),
-        contentType:"application/json",
+        data:data,
+        contentType:false,
+        processData:false,
         success:function(re){
             location.href="/board/boardlist"
         }
