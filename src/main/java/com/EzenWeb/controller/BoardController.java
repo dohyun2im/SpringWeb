@@ -52,13 +52,12 @@ public class BoardController {
     //게시물쓰기
     @PostMapping("/setboard")
     public boolean setboard(BoardDto dto) {
-        System.out.println("확인"+dto.toString());
         return boardService.setboard(dto);
     }
     //목록보기
     @GetMapping("/getboards")
-    public List<BoardDto> getboards(@RequestParam int cno) {
-        return boardService.getboards(cno);
+    public List<BoardDto> getboards(@RequestParam int cno , @RequestParam int page , @RequestParam String key , @RequestParam String keyword) {
+        return boardService.getboards(cno,page,key,keyword);
     }
     //개별조회
     @GetMapping("/getboard")

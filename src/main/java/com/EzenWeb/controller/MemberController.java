@@ -39,21 +39,24 @@ public class MemberController {
     public Resource setdelete(){
         return new ClassPathResource("templates/member/setdelete.html");
     }
-    @GetMapping("/logout")
+
+
+    /*@GetMapping("/logout")
     public Resource logout(){
         return memberService.logout();
-    }
+    }*/
 
     @PostMapping("/setmember")
     public int setmember(@RequestBody memberDto dto) {
        int result = memberService.setmember(dto);
         return result;
     }
-    @PostMapping("/getmember")
-    public int getmember(@RequestBody memberDto dto) {
-        int result= memberService.getmember(dto);
-        return result;
+
+    @GetMapping("/getloginMno")
+    public String getloginMno() {
+        return memberService.getloginMno();
     }
+
     @PostMapping("/getPassword")
     public String findpassword(@RequestParam String memail) {
         return memberService.findpassword(memail);
@@ -66,10 +69,10 @@ public class MemberController {
     public String delete(@RequestParam String mpassword) {
         return memberService.setdelete(mpassword);
     }
-    @GetMapping("/mno")
+    /*@GetMapping("/mno")
     public int mno() {
         return memberService.mno();
-    }
+    }*/
     @GetMapping("/list")
     public List<memberDto> list() {
         return memberService.list();

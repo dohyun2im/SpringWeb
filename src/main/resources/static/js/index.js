@@ -1,10 +1,11 @@
 getMno()
 function getMno(){
     $.ajax({
-        url:"/member/mno",
+        url:"/member/getloginMno",
         type:"GET",
         success:function(re){
-            if(re>0){
+        alert(re)
+            if(re!=""){
                 html='';
                 html+=    '<a href="/member/signup"><button type="button">회원가입</button></a>'+
                           '<a href="/member/login"><button type="button">로그인</button></a>'+
@@ -13,6 +14,12 @@ function getMno(){
                           '<a href="/member/updatepw"><button type="button">비밀번호수정</button></a>'+
                           '<a href="/member/setdelete"><button type="button">회원탈퇴</button></a>'+
                           '<a href="/board/boardlist"><button type="button">글 보기</button></a>'
+                document.querySelector('.app').innerHTML= html;
+            }
+            else{
+                html='';
+                html+=    '<a href="/member/signup"><button type="button">회원가입</button></a>'+
+                          '<a href="/member/login"><button type="button">로그인</button></a>'
                 document.querySelector('.app').innerHTML= html;
             }
         }

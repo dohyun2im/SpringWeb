@@ -5,6 +5,10 @@ import com.EzenWeb.domain.Dto.BoardDto;
 import com.EzenWeb.domain.Dto.VisitDto;
 import com.EzenWeb.domain.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -124,22 +128,30 @@ public class BoardService {
         return false;
     }
     @Transactional
-    public List<BoardDto> getboards(int cno) {
-        List<BoardEntity> entities ; //= boardRepository.findAll();
+    public List<BoardDto> getboards(int cno , int page , String key ,String keyword) {
+        Page<BoardEntity> entities ; //= boardRepository.findAll();
+        Pageable pageable = PageRequest.of(page-1,5, Sort.by(Sort.Direction.DESC,"bno"));
         List<BoardDto> dtos = new ArrayList<>();
-        if(cno == 0 ){
-            entities = boardRepository.findAll();
-            for (BoardEntity entity : entities){
-                dtos.add(entity.toDto());
-            }
+        if(key.equals("btitle")){
+            entities = boardRepository.findBybtitle(cno,keyword,pageable);
+        }else if(key.equals("bcontent")){
+            entities = boardRepository.findBybcontent(cno,keyword,pageable);
+        }else {
+            if(cno==0) entities = boardRepository.findAll(pageable);
+            else entities = boardRepository.findBycno(cno,pageable);
         }
-        else{
-            BcategoryEntity bcEntity = bcategoryRepository.findById(cno).get();
-            entities = bcEntity.getBoardEntityList();
-            for (BoardEntity entity : entities) {
-                dtos.add(entity.toDto());
-            }
+        int btncount =5;
+        int startbtn = (page/btncount)*btncount+1;
+        int endbtn = startbtn+btncount-1;
+        if(endbtn>entities.getTotalPages()){endbtn=entities.getTotalPages();}
+
+
+        for (BoardEntity entity : entities) {
+            dtos.add(entity.toDto());
         }
+        dtos.get(0).setStartbtn(startbtn);
+        dtos.get(0).setEndbtn(endbtn);
+
         return dtos;
     }
     @Transactional

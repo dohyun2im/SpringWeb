@@ -22,14 +22,17 @@ public class MemberEntity extends BaseEntity {
     private int mno;
     @Column(nullable = false)
     private String memail;
-    @Column(nullable = false)
+    @Column
     private String mpassword;
-    @Column(nullable = false)
+    @Column
     private String mphone;
 
     @OneToMany(mappedBy = "memberEntity")
     @Builder.Default
     private List<BoardEntity> boardlist = new ArrayList<>();
+
+    @Column
+    private String role;
 
     public memberDto toDto() {
         return memberDto.builder()

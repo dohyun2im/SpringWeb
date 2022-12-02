@@ -1,4 +1,4 @@
-function getmember(){
+/*function getmember(){
      let info = {
             memail : document.querySelector('.memail').value,
             mpassword : document.querySelector('.mpassword').value
@@ -12,4 +12,4 @@ function getmember(){
             location.href="/member/";
         }
     })
-}
+}*/

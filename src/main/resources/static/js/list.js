@@ -11,13 +11,14 @@ $.ajax({
 })
 getboards()
 function getboards(){
+    let page = 2;
     let cno = document.querySelector('.categorylist').value;
     if(cno===''){cno=0;}
     let html = '<tr><th>카테고리</th><th>제목</th><th>내용</th><th>파일</th><th>작성자</th></tr>';
     $.ajax({
         url:"/board/getboards",
         type:"get",
-        data:{"cno":cno},
+        data:{"cno":cno,"page":page},
         success:function (re) {
           re.forEach(e=>{
             html += '<tr onclick="getview('+e.bno+')"><td>'+e.category+'</td><td>'+e.btitle+'</td><td>'+e.bcontent+'</td><td>'+e.filename.split("_")[1]+'</td><td>'+e.memail+'</td></tr>'

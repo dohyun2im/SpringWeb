@@ -24,6 +24,8 @@ public class BoardDto {
     private String filename;
     private String category;
     private String memail;
+    private int startbtn;
+    private int endbtn;
 
 
     public BoardEntity toEntity(){
