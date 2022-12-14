@@ -106,10 +106,10 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
 
 
 
-    /*public Resource logout() {
+    public Resource logout() {
         request.getSession().setAttribute("loginMno",null);
         return new ClassPathResource("templates/index.html");
-    }*/
+    }
     @Transactional
     public String findpassword(String memail) {
         int mno = (Integer) request.getSession().getAttribute("loginMno");

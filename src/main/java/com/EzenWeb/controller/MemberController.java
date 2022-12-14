@@ -8,13 +8,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/member")
 public class MemberController {
    @Autowired
    private MemberService memberService;
-    @GetMapping("/")
+   /* @GetMapping("/")
     public Resource hello(){
         return new ClassPathResource("templates/index.html");
     }
@@ -39,9 +38,7 @@ public class MemberController {
     public Resource setdelete(){
         return new ClassPathResource("templates/member/setdelete.html");
     }
-
-
-    /*@GetMapping("/logout")
+    @GetMapping("/logout")
     public Resource logout(){
         return memberService.logout();
     }*/

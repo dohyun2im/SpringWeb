@@ -1,5 +1,6 @@
 package com.EzenWeb.domain.Dto;
 
+import com.EzenWeb.domain.BaseEntity;
 import com.EzenWeb.domain.entity.BoardEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,7 +14,7 @@ import javax.persistence.Column;
 @Setter
 @ToString
 @Builder
-public class BoardDto {
+public class BoardDto{
     private int bno;
     private String btitle;
     private String bcontent;
@@ -24,8 +25,7 @@ public class BoardDto {
     private String filename;
     private String category;
     private String memail;
-    private int startbtn;
-    private int endbtn;
+    private String bdate;
 
 
     public BoardEntity toEntity(){

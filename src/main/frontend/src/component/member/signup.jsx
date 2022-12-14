@@ -12,7 +12,16 @@ function Signup( props ){ // * 회원가입 컴포넌트 *
         //  @CrossOrigin(origins = "http://localhost:3000")
         axios           // 3. axios 비동기통신 이용한 서버[spring] 통신
             .post( "http://localhost:8080/member/setmember" ,  info )   // 요청
-            .then( res => { alert( res.data) } )                        // 응답
+            .then( res => {
+                let result = res.data;
+                if(result!=0){
+                    alert('회원가입 성공')
+                }
+                else{
+                    alert('회원가입 실패')
+                }
+             } )                        // 응답
+            .catch( err => { alert( err)})
     }
     // 2. 인증코드 요청 함수
     const getauth = () => {   alert(" 클릭 이벤트 ")  }
@@ -25,16 +34,16 @@ function Signup( props ){ // * 회원가입 컴포넌트 *
                 <h3> 회원가입 </h3>
                 <div>
                     이메일 : <input type="text" className="memail" />
-                    <button type="button" onClick={ getauth } className="getauthbtn"> 인증코드받기 </button><br/>
+                    <button type="button" onClick={ getauth } className="getauthbtn  btn btn-secondary"> 인증코드받기 </button><br/>
                     <div className="authbox">
                         <input type="text" className="authinput" />
-                        <button type="button" className="authbtn" onClick={ authcode } > 인증 </button>
+                        <button type="button" className="authbtn btn btn-secondary" onClick={ authcode } > 인증 </button>
                         <span className="timerbox"></span>
                     </div>
                 </div>
                 핸드폰 : <input type="text" className="mphone" /><br/>
                 비밀번호 : <input type="text" className="mpassword" /><br/>
-                <button type="button" onClick={ setmember } > 가입하기 </button>
+                <button ClassName="btn btn-secondary" type="button" onClick={ setmember } > 가입하기 </button>
             </div>
     );
 }

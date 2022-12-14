@@ -1,14 +1,13 @@
 package com.EzenWeb.service;
 
-import com.EzenWeb.domain.Dto.BcategoryDto;
-import com.EzenWeb.domain.Dto.BoardDto;
-import com.EzenWeb.domain.Dto.VisitDto;
+import com.EzenWeb.domain.Dto.*;
 import com.EzenWeb.domain.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +37,7 @@ public class BoardService {
     private BcategoryRepository bcategoryRepository;
     @Autowired
     private VisitRepository visitRepository;
-    String path = "C:\\Users\\504\\Desktop\\SpringWeb\\src\\main\\resources\\static\\bupload\\";
+    String path = "C:\\";
 
     public void filedownload(String filename){
         String realfile = filename.split("_")[1];
@@ -103,10 +102,12 @@ public class BoardService {
 
     @Transactional
     public boolean setboard(BoardDto dto) {
-        Object  o = request.getSession().getAttribute("loginMno");
+        Object  o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(o==null) return false;
-
-        Optional<MemberEntity> optional =  memberRepository.findById((Integer)o);
+        memberDto mdto = (memberDto) o;
+        System.out.println(mdto);
+        //Optional<MemberEntity> optional =  memberRepository.findById((Integer)o);
+        Optional<MemberEntity> optional = memberRepository.findbymemail(mdto.getMemail());
         Optional<BcategoryEntity> optional2 = bcategoryRepository.findById(dto.getCno());
 
         if (!optional.isPresent() || !optional2.isPresent())return false;
@@ -128,31 +129,25 @@ public class BoardService {
         return false;
     }
     @Transactional
-    public List<BoardDto> getboards(int cno , int page , String key ,String keyword) {
-        Page<BoardEntity> entities ; //= boardRepository.findAll();
-        Pageable pageable = PageRequest.of(page-1,5, Sort.by(Sort.Direction.DESC,"bno"));
-        List<BoardDto> dtos = new ArrayList<>();
-        if(key.equals("btitle")){
-            entities = boardRepository.findBybtitle(cno,keyword,pageable);
-        }else if(key.equals("bcontent")){
-            entities = boardRepository.findBybcontent(cno,keyword,pageable);
-        }else {
-            if(cno==0) entities = boardRepository.findAll(pageable);
-            else entities = boardRepository.findBycno(cno,pageable);
-        }
+    public PageDto getboards(PageDto dto) {
+        Pageable pageable = PageRequest.of(dto.getPage()-1,5, Sort.by(Sort.Direction.DESC,"bno"));
+        Page<BoardEntity> entities = boardRepository.findBySearch(dto.getCno(),dto.getKey(), dto.getKeyword(),pageable);
         int btncount =5;
-        int startbtn = (page/btncount)*btncount+1;
+        int startbtn = (dto.getPage()/btncount)*btncount+1;
         int endbtn = startbtn+btncount-1;
         if(endbtn>entities.getTotalPages()){endbtn=entities.getTotalPages();}
 
-
+        List<BoardDto> blist = new ArrayList<>();
         for (BoardEntity entity : entities) {
-            dtos.add(entity.toDto());
+            blist.add(entity.toDto());
         }
-        dtos.get(0).setStartbtn(startbtn);
-        dtos.get(0).setEndbtn(endbtn);
 
-        return dtos;
+        dto.setList(blist);
+        dto.setStartbtn(startbtn);
+        dto.setEndbtn(endbtn);
+        dto.setTotalBoards(entities.getTotalElements());
+        System.out.println(dto.toString());
+        return dto;
     }
     @Transactional
     public BoardDto getboard(int bno){

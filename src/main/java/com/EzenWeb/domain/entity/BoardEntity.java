@@ -7,6 +7,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -47,6 +49,12 @@ public class BoardEntity extends BaseEntity {
                        .bcontent(this.bcontent)
                        .bview(this.bview)
                        .filename(this.bfile)
+                       .bdate(
+                               this.getCdate().toLocalDate().toString().equals(LocalDateTime.now().toLocalDate().toString()) ?
+                                       this.getCdate().toLocalTime().toString()
+                                       :
+                                       this.getCdate().toLocalDate().toString()
+                       )
                        .category(this.bcategoryEntity.getCategory())
                        .memail(this.memberEntity.getMemail().split("@")[0])
                        .build();

@@ -8,10 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BoardRepository extends JpaRepository<BoardEntity,Integer> {
-    @Query(value = "select * from board where cno= :cno" , nativeQuery = true)
-    Page<BoardEntity> findBycno(int cno , Pageable pageable);
-    @Query(value = "select * from board where cno= :cno and btitle like %:keyword%" , nativeQuery = true)
-    Page<BoardEntity> findBybtitle(int cno , String keyword ,Pageable pageable);
-    @Query(value = "select * from board where cno= :cno and bcontent like %:keyword%" , nativeQuery = true)
-    Page<BoardEntity> findBybcontent(int cno , String keyword ,Pageable pageable);
+    @Query( value = "SELECT * " +
+            "FROM " +
+            "board " +
+            "WHERE " +
+            "IF( :cno = 0 , cno like '%%' , cno = :cno  ) and " +
+            "IF( :key = '' , true , IF( :key = 'btitle' ,  btitle like %:keyword% , bcontent like %:keyword%  ) )" , nativeQuery = true )
+    Page<BoardEntity> findBySearch( int cno , String key , String keyword , Pageable pageable);
 }

@@ -2,6 +2,7 @@ package com.EzenWeb.controller;
 
 import com.EzenWeb.domain.Dto.BcategoryDto;
 import com.EzenWeb.domain.Dto.BoardDto;
+import com.EzenWeb.domain.Dto.PageDto;
 import com.EzenWeb.domain.Dto.VisitDto;
 import com.EzenWeb.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class BoardController {
     BoardService boardService;
 
 
-    @GetMapping("/boardlist")
+    /*@GetMapping("/boardlist")
     public Resource boardList() {
         return new ClassPathResource("templates/board/list.html");
     }
@@ -38,11 +39,11 @@ public class BoardController {
     @GetMapping("/visit")
     public Resource visit() {
         return new ClassPathResource("templates/board/visit.html");
-    }
+    }*/
     //카테고리넣기.
     @PostMapping("/setcategory")
-    public boolean setcategory(@RequestParam String category) {
-        return boardService.setcategory(BcategoryDto.builder().category(category).build());
+    public boolean setcategory(@RequestBody BcategoryDto dto) {
+        return boardService.setcategory(dto);
     }
     //카테고리 리스트
     @GetMapping("/getcategory")
@@ -55,9 +56,10 @@ public class BoardController {
         return boardService.setboard(dto);
     }
     //목록보기
-    @GetMapping("/getboards")
-    public List<BoardDto> getboards(@RequestParam int cno , @RequestParam int page , @RequestParam String key , @RequestParam String keyword) {
-        return boardService.getboards(cno,page,key,keyword);
+    @PostMapping("/getboards")
+    public PageDto getboards(@RequestBody PageDto dto) {
+        System.out.println(dto);
+        return boardService.getboards(dto);
     }
     //개별조회
     @GetMapping("/getboard")
