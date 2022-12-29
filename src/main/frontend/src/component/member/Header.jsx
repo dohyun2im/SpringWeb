@@ -18,9 +18,9 @@ export default function Header(props){
                     (
                      <>
 
-                        <li className='col'><Link to="/member/home">home</Link></li>
-                        <li className='col'><Link to="/member/signup"> 회원가입 </Link></li>
-                        <li className='col'><Link to="/member/Login"> 로그인 </Link></li>
+                        <li className='col'><a href="/member/home">home</a></li>
+                        <li className='col'><a href="/member/signup"> 회원가입 </a></li>
+                        <li className='col'><a href="/member/Login"> 로그인 </a></li>
                      </>
                     )
                     :
@@ -28,15 +28,15 @@ export default function Header(props){
                      <>
 
                         <li>{Login}</li>
-                        <li className='col'><Link to="/member/home">home</Link></li>
+                        <li className='col'><a href="/member/home">hom</a></li>
                         <li className='col'><a href="/kimdohyun"> 로그아웃</a></li>
-                        <li className='col'><Link to="/member/Board"> 게시판 </Link></li>
+                        <li className='col'><a href="/member/Board"> 게시판쓰기</a></li>
+                        <li className='col'><a href="/BoardList"> 게시판읽기 </a></li>
                      </>
                     )
                 }
-
+                <li className='col'><a href="/Chatting"> 채팅 </a></li>
             </ul>
-            <a href="/Logout"> 로그아웃</a>
         </div>
     </div>
     );

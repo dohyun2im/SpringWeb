@@ -164,14 +164,17 @@ public class BoardService {
         Optional<BoardEntity> optional = boardRepository.findById(dto.getBno());
         if(optional.isPresent()) {
             BoardEntity entity = optional.get();
-            if(dto.getBfile() != null) {
+
+
+            //받아온 파일이 있다면?
+            if(!dto.getBfile().getOriginalFilename().equals("")) {
+                //기존 게시물에 파일이 있다면?
                 if (entity.getBfile() != null) {
                     File file = new File(path + entity.getBfile());
-                    if (file.exists()) {
-                        file.delete();
-                    }
-                    entity.setBtitle(null);
+                    //삭제처리
+                    if (file.exists()) {file.delete();}
                 }
+                //저장
                 fileupload(dto, entity);
             }
 
@@ -182,6 +185,9 @@ public class BoardService {
         }
         return false;
     }
+
+
+
     @Transactional
     public boolean deleteboard( int bno){
         Optional<BoardEntity> optional = boardRepository.findById(bno);

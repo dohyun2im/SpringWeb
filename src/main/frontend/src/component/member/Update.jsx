@@ -21,6 +21,7 @@ export default function Update(props) {
         let formdata = new FormData(boardform);
         formdata.set("bcontent",bcontent);
         formdata.set("bno",params.bno);
+
         axios
             .put('/board/updateboard' , formdata , {headers: {'Content-Type': 'multipart/form-data'} } )
             .then((res) => {
@@ -33,7 +34,7 @@ export default function Update(props) {
     return(
         <div>
         <form className="boardform">
-            제목 : <input type="text" name="btitle" value={board.btitle}/>     <br/>
+            제목 : <input type="text" name="btitle" defaultValue={board.btitle}/>     <br/>
             내용 : <CKEditor
                      editor={ ClassicEditor }
                      data= {board.bcontent}

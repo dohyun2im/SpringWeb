@@ -24,9 +24,6 @@ export default function View(props) {
         axios.delete('/board/deleteboard' , {params:{bno:params.bno}} )
              .then( res => { console.log(res.data); window.location.href="/BoardList";})
     }
-    const onDownload = () => {
-
-    }
     const onUpdate = () => {
         window.location.href ="/update/"+params.bno;
     }
@@ -35,7 +32,7 @@ export default function View(props) {
         <div>
             <div>{board.btitle}</div>
             <div dangerouslySetInnerHTML={{__html:board.bcontent}}></div>
-            {board.bfilename != '' && <button onClick={onDownload}>{board.filename}</button>}
+            {board.bfilename != '' && <a href={"/board/filedownload?filename="+board.filename}>{board.filename}</a>}
 
             <div>
                 {Login == board.memail &&  <button onClick={onUpdate} > 수정 </button>}

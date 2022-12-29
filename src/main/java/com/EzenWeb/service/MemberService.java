@@ -87,7 +87,7 @@ public class MemberService implements UserDetailsService , OAuth2UserService<OAu
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Dto.setMpassword(passwordEncoder.encode(Dto.getPassword()));
         MemberEntity entity = memberRepository.save(Dto.toEntity());
-        entity.setRole("user");
+        entity.setRole("Role_Member");
         return entity.getMno();
     }
 

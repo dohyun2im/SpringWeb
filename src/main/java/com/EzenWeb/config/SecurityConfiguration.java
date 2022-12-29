@@ -18,7 +18,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http)throws  Exception{
-        http.formLogin()
+        http
+                .authorizeHttpRequests()
+                .antMatchers("/board/setboard")
+                .hasRole("MEMBER")
+                .antMatchers("/**").permitAll()
+            .and()
+                .exceptionHandling()
+                .accessDeniedPage("/error")
+            .and()
+                .formLogin()
                 .loginPage("/member/login")
                 .loginProcessingUrl("/member/loginprocess")
                 .defaultSuccessUrl("/member/home")
@@ -42,6 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/board/getboards")
                 .ignoringAntMatchers("/board/deleteboard")
                 .ignoringAntMatchers("/board/updateboard")
+                .ignoringAntMatchers("/board/filedownload")
+                .ignoringAntMatchers("/Room/setRoom")
             .and()
                 .oauth2Login()
                 .defaultSuccessUrl("/member/")

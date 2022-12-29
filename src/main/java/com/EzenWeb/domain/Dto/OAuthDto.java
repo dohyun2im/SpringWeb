@@ -68,7 +68,7 @@ public class OAuthDto {
     public MemberEntity toEntity(){
         return MemberEntity.builder()
                            .memail(this.memail)
-                           .role(this.registrationId)
+                           .role("Role_Member")
                            .build();
     }
 }

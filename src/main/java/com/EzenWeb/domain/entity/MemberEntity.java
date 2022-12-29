@@ -30,7 +30,9 @@ public class MemberEntity extends BaseEntity {
     @OneToMany(mappedBy = "memberEntity")
     @Builder.Default
     private List<BoardEntity> boardlist = new ArrayList<>();
-
+    @OneToMany(mappedBy = "RoomEntity")
+    @Builder.Default
+    private List<RoomEntity> roomlist = new ArrayList<>();
     @Column
     private String role;
 
